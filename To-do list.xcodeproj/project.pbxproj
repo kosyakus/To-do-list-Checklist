@@ -12,6 +12,7 @@
 		8478313F1F40E7EF0028E6C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8478313D1F40E7EF0028E6C8 /* Main.storyboard */; };
 		847831411F40E7EF0028E6C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847831401F40E7EF0028E6C8 /* Assets.xcassets */; };
 		847831441F40E7EF0028E6C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847831421F40E7EF0028E6C8 /* LaunchScreen.storyboard */; };
+		847831501F40EB9E0028E6C8 /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478314F1F40EB9E0028E6C8 /* ChecklistViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		847831401F40E7EF0028E6C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		847831431F40E7EF0028E6C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		847831451F40E7EF0028E6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8478314F1F40EB9E0028E6C8 /* ChecklistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				847831391F40E7EF0028E6C8 /* AppDelegate.swift */,
 				8478313B1F40E7EF0028E6C8 /* ViewController.swift */,
 				8478313D1F40E7EF0028E6C8 /* Main.storyboard */,
+				8478314F1F40EB9E0028E6C8 /* ChecklistViewController.swift */,
 				847831401F40E7EF0028E6C8 /* Assets.xcassets */,
 				847831421F40E7EF0028E6C8 /* LaunchScreen.storyboard */,
 				847831451F40E7EF0028E6C8 /* Info.plist */,
@@ -137,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8478313C1F40E7EF0028E6C8 /* ViewController.swift in Sources */,
+				847831501F40EB9E0028E6C8 /* ChecklistViewController.swift in Sources */,
 				8478313A1F40E7EF0028E6C8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
