@@ -53,6 +53,9 @@
                                         <constraint firstItem="oBt-Qb-ShO" firstAttribute="centerY" secondItem="0oF-lp-9gj" secondAttribute="centerY" id="yhd-jo-AOd"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="lBI-bB-Nj9" kind="presentation" identifier="EditItem" trigger="accessoryAction" id="uBU-gz-EnZ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -177,4 +180,7 @@
             <point key="canvasLocation" x="1760.8" y="65.217391304347828"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="uBU-gz-EnZ"/>
+    </inferredMetricsTieBreakers>
 </document>

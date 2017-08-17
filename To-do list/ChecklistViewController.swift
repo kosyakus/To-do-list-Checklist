@@ -27,6 +27,16 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         
     }
     
+    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem) {
+        if let index = items.index(of: item) { //find the row number for this ChecklistItem
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configureText(for: cell, with: item)
+            }
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
 // This declares that items will hold an array of ChecklistItem objects
 // but it does not actually create that array.
 // At this point, items does not have a value yet.
@@ -191,14 +201,24 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // 1
+
         if segue.identifier == "AddItem" {
-            // 2
             let navigationController = segue.destination as! UINavigationController
-            // 3
             let controller = navigationController.topViewController as! AddItemViewController
-            // 4
+            
             controller.delegate = self
+            
+        } else if segue.identifier == "EditItem" {
+            let navigationController = segue.destination as! UINavigationController
+            let controller = navigationController.topViewController as! AddItemViewController
+            
+            controller.delegate = self
+
+// that UITableViewCell object find the row number by looking up the corresponding index-path using tableView.indexPath(for)
+            if let indexPath = tableView.indexPath(
+                for: sender as! UITableViewCell) {
+                controller.itemToEdit = items[indexPath.row]
+            }
         }
     }
     
