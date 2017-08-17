@@ -8,9 +8,43 @@
 
 import UIKit
 
-class AddItemViewController: UITableViewController {
+// adding delegate methods
+protocol AddItemViewControllerDelegate: class {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
+    func addItemViewController(_ controller: AddItemViewController,
+                               didFinishAdding item: ChecklistItem)
+}
+
+class AddItemViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textField: UITextField!
+    
+    @IBOutlet weak var doneBarButton: UIBarButtonItem! // connect the delegate
+    
+// check if the text field is empty, then the Done button is not enabled (also in the storyboard attr inspector)
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        let oldText = textField.text! as NSString
+        let newText = oldText.replacingCharacters(in: range, with: string)
+            as NSString
+        
+        doneBarButton.isEnabled = (newText.length > 0) // the same as if-else
+        
+       /* if newText.length > 0 {
+            doneBarButton.isEnabled = true
+        } else {
+            doneBarButton.isEnabled = false
+        }*/
+        
+        return true
+    }
+    
+// the keyboard automatically appeared once the screen opens
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        textField.becomeFirstResponder()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

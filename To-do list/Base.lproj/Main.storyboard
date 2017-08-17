@@ -78,11 +78,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7f0-bP-Che">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name of the item" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7f0-bP-Che">
                                                     <rect key="frame" x="15" y="6" width="345" height="31.5"/>
                                                     <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="done" destination="DOm-YQ-bab" eventType="editingDidEndOnExit" id="7Ar-CP-PxJ"/>
+                                                        <outlet property="delegate" destination="DOm-YQ-bab" id="RSi-WJ-Au5"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -109,13 +113,14 @@
                                 <action selector="cancel" destination="DOm-YQ-bab" id="8cf-td-Y5h"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="oNo-Rv-hdQ">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="oNo-Rv-hdQ">
                             <connections>
                                 <action selector="done" destination="DOm-YQ-bab" id="3is-ez-HeG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneBarButton" destination="oNo-Rv-hdQ" id="Yh4-oV-dQO"/>
                         <outlet property="textField" destination="7f0-bP-Che" id="AuK-Y9-z9w"/>
                     </connections>
                 </tableViewController>
