@@ -14,6 +14,7 @@
 		847831441F40E7EF0028E6C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847831421F40E7EF0028E6C8 /* LaunchScreen.storyboard */; };
 		847831501F40EB9E0028E6C8 /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478314F1F40EB9E0028E6C8 /* ChecklistViewController.swift */; };
 		847831521F41A9760028E6C8 /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847831511F41A9760028E6C8 /* ChecklistItem.swift */; };
+		847831541F4397870028E6C8 /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847831531F4397870028E6C8 /* AddItemViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		847831451F40E7EF0028E6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8478314F1F40EB9E0028E6C8 /* ChecklistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistViewController.swift; sourceTree = "<group>"; };
 		847831511F41A9760028E6C8 /* ChecklistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
+		847831531F4397870028E6C8 /* AddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +63,9 @@
 				847831391F40E7EF0028E6C8 /* AppDelegate.swift */,
 				8478313B1F40E7EF0028E6C8 /* ViewController.swift */,
 				8478313D1F40E7EF0028E6C8 /* Main.storyboard */,
-				8478314F1F40EB9E0028E6C8 /* ChecklistViewController.swift */,
 				847831511F41A9760028E6C8 /* ChecklistItem.swift */,
+				8478314F1F40EB9E0028E6C8 /* ChecklistViewController.swift */,
+				847831531F4397870028E6C8 /* AddItemViewController.swift */,
 				847831401F40E7EF0028E6C8 /* Assets.xcassets */,
 				847831421F40E7EF0028E6C8 /* LaunchScreen.storyboard */,
 				847831451F40E7EF0028E6C8 /* Info.plist */,
@@ -142,6 +145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847831541F4397870028E6C8 /* AddItemViewController.swift in Sources */,
 				8478313C1F40E7EF0028E6C8 /* ViewController.swift in Sources */,
 				847831501F40EB9E0028E6C8 /* ChecklistViewController.swift in Sources */,
 				8478313A1F40E7EF0028E6C8 /* AppDelegate.swift in Sources */,
