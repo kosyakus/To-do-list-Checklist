@@ -10,19 +10,27 @@ import UIKit
 
 class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
     
+    var items: [ChecklistItem]
+    
     func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
         dismiss(animated: true, completion: nil)
     }
     
     func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
+        
+        let newRowIndex = items.count
+        items.append(item)
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
         dismiss(animated: true, completion: nil)
+        
     }
     
 // This declares that items will hold an array of ChecklistItem objects
 // but it does not actually create that array.
 // At this point, items does not have a value yet.
-    var items: [ChecklistItem]
-    
+        
     required init?(coder aDecoder: NSCoder) {
         
     // This instantiates the array. Now items contains a valid array object,
@@ -135,22 +143,6 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         label.text = item.text
         
     }
-    
-    @IBAction func addItem() {
-        
-        let newRowIndex = items.count
-        
-        let item = ChecklistItem()
-        item.text = "I am a new row"
-        item.checked = false
-        items.append(item)
-        
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRows(at: indexPaths, with: .automatic)
-        
-    }
-    
     
     
     /*
