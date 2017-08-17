@@ -19,26 +19,38 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="ChecklistItem" id="HXk-Bx-yEm">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="HXk-Bx-yEm">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HXk-Bx-yEm" id="0oF-lp-9gj">
-                                    <rect key="frame" x="0.0" y="0.0" width="336" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="308" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hsm-W0-NRn">
-                                            <rect key="frame" x="18" y="11.5" width="300" height="20.5"/>
+                                            <rect key="frame" x="38" y="11" width="252" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✅" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBt-Qb-ShO">
+                                            <rect key="frame" x="5" y="9" width="24" height="26.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="5mU-HX-cwr"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Hsm-W0-NRn" firstAttribute="centerY" secondItem="0oF-lp-9gj" secondAttribute="centerY" id="AL2-wV-TPp"/>
+                                        <constraint firstItem="oBt-Qb-ShO" firstAttribute="leading" secondItem="0oF-lp-9gj" secondAttribute="leading" constant="5" id="NK7-85-V7q"/>
                                         <constraint firstItem="Hsm-W0-NRn" firstAttribute="top" secondItem="0oF-lp-9gj" secondAttribute="topMargin" constant="3" id="PfS-PI-coR"/>
+                                        <constraint firstItem="Hsm-W0-NRn" firstAttribute="leading" secondItem="0oF-lp-9gj" secondAttribute="leadingMargin" constant="30" id="WTT-K2-Dox"/>
+                                        <constraint firstItem="oBt-Qb-ShO" firstAttribute="centerY" secondItem="0oF-lp-9gj" secondAttribute="centerY" id="afx-ka-P3q"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Hsm-W0-NRn" secondAttribute="trailing" constant="10" id="kPw-AK-lcv"/>
-                                        <constraint firstItem="Hsm-W0-NRn" firstAttribute="leading" secondItem="0oF-lp-9gj" secondAttribute="leadingMargin" constant="10" id="tAz-4m-0RL"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="Hsm-W0-NRn" secondAttribute="bottom" constant="3" id="yM0-NP-pLX"/>
+                                        <constraint firstItem="oBt-Qb-ShO" firstAttribute="centerY" secondItem="0oF-lp-9gj" secondAttribute="centerY" id="yhd-jo-AOd"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
