@@ -8,7 +8,15 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController {
+class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
+    
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
+        dismiss(animated: true, completion: nil)
+    }
     
 // This declares that items will hold an array of ChecklistItem objects
 // but it does not actually create that array.
@@ -186,14 +194,19 @@ class ChecklistViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        // 1
+        if segue.identifier == "AddItem" {
+            // 2
+            let navigationController = segue.destination as! UINavigationController
+            // 3
+            let controller = navigationController.topViewController as! AddItemViewController
+            // 4
+            controller.delegate = self
+        }
     }
-    */
+    
 
 }

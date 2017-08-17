@@ -16,6 +16,8 @@ protocol AddItemViewControllerDelegate: class {
 }
 
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
+    
+    weak var delegate: AddItemViewControllerDelegate?
 
     @IBOutlet weak var textField: UITextField!
     
@@ -75,18 +77,27 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     
     @IBAction func cancel() {
-    // This tells the app to close the Add Item screen with an animation
-        dismiss(animated: true, completion: nil)
+   /* // This tells the app to close the Add Item screen with an animation
+        dismiss(animated: true, completion: nil) 
+         
+         Here the ? tells Swift not to send the message if delegate is nil. You can read this
+         as, “Is there a delegate? Then send the message.” This practice is called optional
+         chaining     */
+        
+        delegate?.addItemViewControllerDidCancel(self)
         
     }
     
     
     @IBAction func done() {
-    //This tells the app to close the Add Item screen with an animation
-        
+    /*//This tells the app to close the Add Item screen with an animation
         print("Contents of the text field: \(textField.text!)")
+        dismiss(animated: true, completion: nil)*/
         
-        dismiss(animated: true, completion: nil)
+        let item = ChecklistItem()
+        item.text = textField.text!
+        item.checked = false
+        delegate?.addItemViewController(self, didFinishAdding: item)
         
     }
     

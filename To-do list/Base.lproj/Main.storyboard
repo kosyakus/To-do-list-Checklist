@@ -51,7 +51,7 @@
                     <navigationItem key="navigationItem" title="Checklists" id="FAA-w7-wFK">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nyP-yY-fP0">
                             <connections>
-                                <segue destination="lBI-bB-Nj9" kind="presentation" id="wL8-5V-Ozg"/>
+                                <segue destination="lBI-bB-Nj9" kind="presentation" identifier="AddItem" id="wL8-5V-Ozg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
