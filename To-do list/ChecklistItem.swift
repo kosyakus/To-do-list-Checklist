@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ChecklistItem {
+class ChecklistItem: NSObject { // adding NSObject to satisfy Equitable protocol
     var text = ""
     var checked = false
     
