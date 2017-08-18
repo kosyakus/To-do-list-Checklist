@@ -9,7 +9,11 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
-    
+
+// This declares that items will hold an array of ChecklistItem objects
+// but it does not actually create that array.
+// At this point, items does not have a value yet.
+
     var items: [ChecklistItem]
     
     func addItemViewControllerDidCancel(_ controller: ItemDetailViewController) {
@@ -25,6 +29,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         tableView.insertRows(at: indexPaths, with: .automatic)
         dismiss(animated: true, completion: nil)
         
+        saveChecklistItems()
+        
     }
     
     func addItemViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
@@ -35,12 +41,12 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             }
         }
         dismiss(animated: true, completion: nil)
+        
+        saveChecklistItems()
     }
     
-// This declares that items will hold an array of ChecklistItem objects
-// but it does not actually create that array.
-// At this point, items does not have a value yet.
-        
+// When you add a view controller to a storyboard, Xcode uses the NSCoder system to write this object to a file (encoding). Then when your application starts up, it uses NSCoder again to read the objects from the storyboard file (decoding)
+// The process of converting objects to files and back again is also known as serialization
     required init?(coder aDecoder: NSCoder) {
         
     // This instantiates the array. Now items contains a valid array object,
@@ -76,6 +82,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         items.append(row4item)
         
         super.init(coder: aDecoder)
+        print("Documents folder is \(documentsDirectory())")
+        print("Data file path is \(dataFilePath())")
     }
     
     
@@ -136,6 +144,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        saveChecklistItems()
+        
     }
     
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
@@ -180,6 +190,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
         
+        saveChecklistItems()
+        
     }
     
 
@@ -197,6 +209,24 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         return true
     }
     */
+    
+    
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory,
+                                             in: .userDomainMask)
+        return paths[0]
+    }
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklists.plist")
+    }
+    
+    func saveChecklistItems() {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWith: data)
+        archiver.encode(items, forKey: "ChecklistItems")
+        archiver.finishEncoding()
+        data.write(to: dataFilePath(), atomically: true)
+    }
 
     
     
