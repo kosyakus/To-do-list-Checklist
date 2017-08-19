@@ -17,6 +17,7 @@
 		847831541F4397870028E6C8 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847831531F4397870028E6C8 /* ItemDetailViewController.swift */; };
 		847831561F48662A0028E6C8 /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847831551F48662A0028E6C8 /* AllListsViewController.swift */; };
 		847831581F486C6B0028E6C8 /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847831571F486C6B0028E6C8 /* Checklist.swift */; };
+		8478315A1F487B140028E6C8 /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847831591F487B140028E6C8 /* ListDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		847831531F4397870028E6C8 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ItemDetailViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		847831551F48662A0028E6C8 /* AllListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
 		847831571F486C6B0028E6C8 /* Checklist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
+		847831591F487B140028E6C8 /* ListDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				8478313D1F40E7EF0028E6C8 /* Main.storyboard */,
 				847831571F486C6B0028E6C8 /* Checklist.swift */,
 				847831551F48662A0028E6C8 /* AllListsViewController.swift */,
+				847831591F487B140028E6C8 /* ListDetailViewController.swift */,
 				847831511F41A9760028E6C8 /* ChecklistItem.swift */,
 				8478314F1F40EB9E0028E6C8 /* ChecklistViewController.swift */,
 				847831531F4397870028E6C8 /* ItemDetailViewController.swift */,
@@ -158,6 +161,7 @@
 				8478313A1F40E7EF0028E6C8 /* AppDelegate.swift in Sources */,
 				847831521F41A9760028E6C8 /* ChecklistItem.swift in Sources */,
 				847831581F486C6B0028E6C8 /* Checklist.swift in Sources */,
+				8478315A1F487B140028E6C8 /* ListDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
