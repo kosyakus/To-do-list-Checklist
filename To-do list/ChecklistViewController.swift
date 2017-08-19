@@ -9,11 +9,10 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
+    
+    var checklist: Checklist!
 
-// This declares that items will hold an array of ChecklistItem objects
-// but it does not actually create that array.
-// At this point, items does not have a value yet.
-
+// This declares that items will hold an array of ChecklistItem objects but it does not actually create that array. At this point, items does not have a value yet.
     var items: [ChecklistItem]
     
     func addItemViewControllerDidCancel(_ controller: ItemDetailViewController) {
@@ -84,12 +83,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = checklist.name
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
