@@ -40,14 +40,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         lists = [Checklist]() // Give the lists variable a value (the same = Array<Checklist>() )
         super.init(coder: aDecoder) // Without this, the view controller won’t be properly loaded from the storyboard
         
-        var list = Checklist(name: "Birthdays")
-        lists.append(list)
-        list = Checklist(name: "Groceries")
-        lists.append(list)
-        list = Checklist(name: "Cool Apps")
-        lists.append(list)
-        list = Checklist(name: "To Do")
-        lists.append(list)
+        loadChecklists()
+        
     }
 
     override func viewDidLoad() {
@@ -139,7 +133,42 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         return true
     }
     */
-
+    
+    
+// the load/save code
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklists.plist")
+    }
+    
+    
+    // this method is now called saveChecklists()
+    func saveChecklists() {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWith: data)
+        // this line is different from before
+        archiver.encode(lists, forKey: "Checklists")
+        archiver.finishEncoding()
+        data.write(to: dataFilePath(), atomically: true)
+    }
+    
+    
+    // this method is now called loadChecklists()
+    func loadChecklists() {
+        let path = dataFilePath()
+        if let data = try? Data(contentsOf: path) {
+            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+            // this line is different from before
+            lists = unarchiver.decodeObject(forKey: "Checklists") as! [Checklist]
+            unarchiver.finishDecoding()
+        }
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowChecklist" {

@@ -47,27 +47,27 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 // When you add a view controller to a storyboard, Xcode uses the NSCoder system to write this object to a file (encoding). Then when your application starts up, it uses NSCoder again to read the objects from the storyboard file (decoding)
 // The process of converting objects to files and back again is also known as serialization
     
-/*    required init?(coder aDecoder: NSCoder) {
+   /* required init?(coder aDecoder: NSCoder) {
         
-    // This instantiates the array. Now items contains a valid array object,
+    /*// This instantiates the array. Now items contains a valid array object,
     // but the array has no ChecklistItem objects inside it yet.
         items = [ChecklistItem]()
         
-   /* // This instantiates a new ChecklistItem object. Notice the ()
+    // This instantiates a new ChecklistItem object. Notice the ()
         let row0item = ChecklistItem()
     // Give values to the data items inside the new ChecklistItem object.
         row0item.text = "Walk the dog"
         row0item.checked = false
     // This adds the ChecklistItem object into the items array
-        items.append(row0item) */
+        items.append(row0item)
         
         
         super.init(coder: aDecoder)
         loadChecklistItems()
         print("Documents folder is \(documentsDirectory())")
-        print("Data file path is \(dataFilePath())")
-    }
-*/
+        print("Data file path is \(dataFilePath())") */
+    }*/
+
     /*
     func loadChecklistItems() {
 // put the results of dataFilePath() in a temporary constant named path
