@@ -96,6 +96,18 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
     
+// method to Edit the checklist
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        // The call to instantiateViewController(withIdentifier) takes an identifier string
+        let navigationController = storyboard!.instantiateViewController(withIdentifier: "ListDetailNavigationController") as! UINavigationController
+        let controller = navigationController.topViewController as! ListDetailViewController
+        controller.delegate = self
+        let checklist = lists[indexPath.row]
+        controller.checklistToEdit = checklist
+        present(navigationController, animated: true, completion: nil)
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.
