@@ -49,11 +49,12 @@ class DataModel {
     init() {
         loadChecklists()
         registerDefaults()
+        handleFirstTime()
     }
     
 // this method prevents crashes when first launching the app (and  UserDefaults return 0), now UD returns -1 (main screen)
     func registerDefaults() {
-        let dictionary: [String: Any] = [ "ChecklistIndex": -1 ]
+        let dictionary: [String: Any] = [ "ChecklistIndex": -1, "FirstTime": true ]
         UserDefaults.standard.register(defaults: dictionary)
     }
     
@@ -63,6 +64,19 @@ class DataModel {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "ChecklistIndex")
+        }
+    }
+    
+// check whether it is the first time user open the app. If true, then create some example checklist to show what to do
+    func handleFirstTime() {
+        let userDefaults = UserDefaults.standard
+        let firstTime = userDefaults.bool(forKey: "FirstTime")
+        if firstTime {
+            let checklist = Checklist(name: "List")
+            lists.append(checklist)
+            indexOfSelectedChecklist = 0 // set indexOfSelectedChecklist to 0, which is the index of this newly added Checklist object, to make sure the app will automatically segue to the new list in AllListsViewController’s viewDidAppear()
+            userDefaults.set(false, forKey: "FirstTime")
+            userDefaults.synchronize()
         }
     }
     
