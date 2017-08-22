@@ -13,15 +13,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    let dataModel = DataModel() // completely different from dataModel object of AllListsVC!!!
+    
     func saveData() {
-        let navigationController = window!.rootViewController as! UINavigationController // the same as let navigationController = window?.rootViewController
+        /*let navigationController = window!.rootViewController as! UINavigationController // the same as let navigationController = window?.rootViewController
         let controller = navigationController.viewControllers[0] as! AllListsViewController
-        controller.saveChecklists()
+        controller.saveChecklists() */
+        
+        // simplify
+        dataModel.saveChecklists()
     }
 
-
+// gets called as soon as the app starts up
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let navigationController = window!.rootViewController as! UINavigationController
+        let controller = navigationController.viewControllers[0] as! AllListsViewController
+        controller.dataModel = dataModel
+        // This finds the AllListsViewController by looking in the storyboard (as before) and then sets its dataModel property
+        
         return true
     }
 
