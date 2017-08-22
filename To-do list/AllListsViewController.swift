@@ -8,7 +8,33 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
+// To recognize whether the user presses the back button on the navigation bar, it has to become a delegate of the navigation controller
+
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
+
+// UINavContrDeleg method: (added to control the data if the user switches app)
+    // This method is called whenever the navigation controller will slide to a new screen
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        // Was the back button tapped?
+        if viewController === self {
+            // With === checking whether two variables refer to the exact same object
+            UserDefaults.standard.set(-1, forKey: "ChecklistIndex")
+        }
+    }
+    
+
+// to check at startup which checklist has to be shown and then perform the segue manually (when the user switches the apps)
+    // UIKit automatically calls this method after the view controller has become visible
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.delegate = self //Every view controller has a built-in navigationController property
+        let index = UserDefaults.standard.integer(forKey: "ChecklistIndex")
+        if index != -1 {
+            let checklist = dataModel.lists[index]
+            performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+        }
+    }
+    
     
 // implementing delegate methods
     func listDetailViewControllerDidCancel(_ controller: ListDetailViewController) {
@@ -56,8 +82,6 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -88,6 +112,9 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     
 // method to go to another VC after tapping on the cell
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        UserDefaults.standard.set(indexPath.row, forKey: "ChecklistIndex") // store the index of the selected row into UserDefaults under the key “ChecklistIndex”
+        
         let checklist = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: checklist)
     }
@@ -105,14 +132,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-    
+
 
 // that allows the user to delete checklists
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -120,21 +140,6 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
     }
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     
 // the load/save code
