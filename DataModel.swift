@@ -48,6 +48,22 @@ class DataModel {
 // as soon as the DataModel object is created, it will attempt to load Checklists.plist
     init() {
         loadChecklists()
+        registerDefaults()
+    }
+    
+// this method prevents crashes when first launching the app (and  UserDefaults return 0), now UD returns -1 (main screen)
+    func registerDefaults() {
+        let dictionary: [String: Any] = [ "ChecklistIndex": -1 ]
+        UserDefaults.standard.register(defaults: dictionary)
+    }
+    
+    var indexOfSelectedChecklist: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "ChecklistIndex")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "ChecklistIndex")
+        }
     }
     
  
