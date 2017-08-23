@@ -36,6 +36,13 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         }
     }
     
+// add this method to know if there any changes in ChecklistVC (we need to show the remaining tasks)
+    // will is called before didAppear. when the view is about to become visible but the animation hasn’t started yet
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     
 // implementing delegate methods
     func listDetailViewControllerDidCancel(_ controller: ListDetailViewController) {
@@ -95,7 +102,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
             return cell
         } else {
-            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
     }
     
@@ -107,6 +114,16 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let checklist = dataModel.lists[indexPath.row]
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
+        
+    // this shows how many items are unchecked
+        let count = checklist.countUncheckedItems()
+        if checklist.items.count == 0 {
+            cell.detailTextLabel!.text = "(No Items)"
+        } else if count == 0 {
+            cell.detailTextLabel!.text = "All Done!"
+        } else {
+            cell.detailTextLabel!.text = "\(count) Remaining"
+        }
 
         return cell
     }

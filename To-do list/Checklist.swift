@@ -30,4 +30,14 @@ class Checklist: NSObject, NSCoding { // NSCoding protocol requires to add two m
         aCoder.encode(items, forKey: "Items")
     }
     
+    
+// func, which count the number of lines in particular checklist (which doesn't have a checkmark)
+    func countUncheckedItems() -> Int {
+        var count = 0
+        for item in items where !item.checked {
+            count += 1
+        }
+        return count
+    }
+    
 }
