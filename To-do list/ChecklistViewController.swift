@@ -10,7 +10,10 @@ import UIKit
 
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
-    var items: [ChecklistItem]
+    var checklist: Checklist!
+
+// This declares that items will hold an array of ChecklistItem objects but it does not actually create that array. At this point, items does not have a value yet.
+    //var items: [ChecklistItem]
     
     func addItemViewControllerDidCancel(_ controller: ItemDetailViewController) {
         dismiss(animated: true, completion: nil)
@@ -18,32 +21,35 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     func addItemViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
         
-        let newRowIndex = items.count
-        items.append(item)
+        let newRowIndex = checklist.items.count
+        checklist.items.append(item)
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
         dismiss(animated: true, completion: nil)
         
+        //saveChecklistItems()
+        
     }
     
     func addItemViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
-        if let index = items.index(of: item) { //find the row number for this ChecklistItem
+        if let index = checklist.items.index(of: item) { //find the row number for this ChecklistItem
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
                 configureText(for: cell, with: item)
             }
         }
         dismiss(animated: true, completion: nil)
+        
+        //saveChecklistItems()
     }
     
-// This declares that items will hold an array of ChecklistItem objects
-// but it does not actually create that array.
-// At this point, items does not have a value yet.
+// When you add a view controller to a storyboard, Xcode uses the NSCoder system to write this object to a file (encoding). Then when your application starts up, it uses NSCoder again to read the objects from the storyboard file (decoding)
+// The process of converting objects to files and back again is also known as serialization
+    
+   /* required init?(coder aDecoder: NSCoder) {
         
-    required init?(coder aDecoder: NSCoder) {
-        
-    // This instantiates the array. Now items contains a valid array object,
+    /*// This instantiates the array. Now items contains a valid array object,
     // but the array has no ChecklistItem objects inside it yet.
         items = [ChecklistItem]()
         
@@ -55,38 +61,32 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     // This adds the ChecklistItem object into the items array
         items.append(row0item)
         
-        let row1item = ChecklistItem()
-        row1item.text = "Brush my teeth"
-        row1item.checked = true
-        items.append(row1item)
-        
-        let row2item = ChecklistItem()
-        row2item.text = "Learn iOS development"
-        row2item.checked = true
-        items.append(row2item)
-        
-        let row3item = ChecklistItem()
-        row3item.text = "Soccer practice"
-        row3item.checked = false
-        items.append(row3item)
-        
-        let row4item = ChecklistItem()
-        row4item.text = "Eat ice cream"
-        row4item.checked = true
-        items.append(row4item)
         
         super.init(coder: aDecoder)
+        loadChecklistItems()
+        print("Documents folder is \(documentsDirectory())")
+        print("Data file path is \(dataFilePath())") */
+    }*/
+
+    /*
+    func loadChecklistItems() {
+// put the results of dataFilePath() in a temporary constant named path
+        let path = dataFilePath()
+// Try to load the contents of Checklists.plist into a new Data object
+        if let data = try? Data(contentsOf: path) {
+// load the entire array and its contents from the file
+            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+            items = unarchiver.decodeObject(forKey: "ChecklistItems")
+                as! [ChecklistItem]
+            unarchiver.finishDecoding()
+        }
     }
-    
+    */
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = checklist.name
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,14 +103,14 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return items.count
+        return checklist.items.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
 
-        let item = items[indexPath.row]
+        let item = checklist.items[indexPath.row]
         configureText(for: cell, with: item)
         configureCheckmark(for: cell, with: item)
         
@@ -129,18 +129,21 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let cell = tableView.cellForRow(at: indexPath) {
-            let item = items[indexPath.row]
+            let item = checklist.items[indexPath.row]
             item.toggleChecked()
             configureCheckmark(for: cell, with: item)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        //saveChecklistItems()
+        
     }
     
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
         
         let label = cell.viewWithTag(1001) as! UILabel
+        // label.textColor = view.tintColor - checkmark uses the tint color too
         
         if item.checked {
             label.text = "✅"
@@ -175,10 +178,12 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }*/
         
-        items.remove(at: indexPath.row)
+        checklist.items.remove(at: indexPath.row)
         
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
+        
+        //saveChecklistItems()
         
     }
     
@@ -197,7 +202,25 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         return true
     }
     */
-
+    
+/*
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory,
+                                             in: .userDomainMask)
+        return paths[0]
+    }
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklists.plist")
+    }
+    
+    func saveChecklistItems() {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWith: data)
+        archiver.encode(items, forKey: "ChecklistItems")
+        archiver.finishEncoding()
+        data.write(to: dataFilePath(), atomically: true)
+    }
+*/
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -217,7 +240,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 // that UITableViewCell object find the row number by looking up the corresponding index-path using tableView.indexPath(for)
             if let indexPath = tableView.indexPath(
                 for: sender as! UITableViewCell) {
-                controller.itemToEdit = items[indexPath.row]
+                controller.itemToEdit = checklist.items[indexPath.row]
             }
         }
     }
