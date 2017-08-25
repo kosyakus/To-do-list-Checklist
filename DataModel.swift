@@ -56,7 +56,7 @@ class DataModel {
     
 // this method prevents crashes when first launching the app (and  UserDefaults return 0), now UD returns -1 (main screen)
     func registerDefaults() {
-        let dictionary: [String: Any] = [ "ChecklistIndex": -1, "FirstTime": true ]
+        let dictionary: [String: Any] = [ "ChecklistIndex": -1, "FirstTime": true, "ChecklistItemID": 0]
         UserDefaults.standard.register(defaults: dictionary)
     }
     
@@ -88,6 +88,16 @@ class DataModel {
             return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending })
     }
     
+    
+// method to create an item ID (for notifications)
+    // This method gets the current “ChecklistItemID” value from UserDefaults, adds 1 to it, and writes it back to UserDefaults. It returns the previous value to the caller
+    class func nextChecklistItemID() -> Int {
+        let userDefaults = UserDefaults.standard
+        let itemID = userDefaults.integer(forKey: "ChecklistItemID")
+        userDefaults.set(itemID + 1, forKey: "ChecklistItemID")
+        userDefaults.synchronize()
+        return itemID
+    }
  
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 // adding delegate methods
 protocol ItemDetailViewControllerDelegate: class {
@@ -25,6 +26,15 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     
     @IBOutlet weak var doneBarButton: UIBarButtonItem! // connect the delegate
+    
+    @IBOutlet weak var shouldRemindSwitch: UISwitch!
+    @IBOutlet weak var dueDateLabel: UILabel!
+    
+    @IBOutlet weak var datePickerCell: UITableViewCell!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
+    var dueDate = Date()
+    var datePickerVisible = false
     
 // check if the text field is empty, then the Done button is not enabled (also in the storyboard attr inspector)
     func textField(_ textField: UITextField,
@@ -45,6 +55,14 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
     
+// hodes the keyboard, when the date picker is on the screen
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        hideDatePicker()
+    }
+    
+    
+    
+    
 // the keyboard automatically appeared once the screen opens
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -59,8 +77,11 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             title = "Edit Item"
             textField.text = item.text
             doneBarButton.isEnabled = true // enable the Done button
+            
+            shouldRemindSwitch.isOn = item.shouldRemind // this is for switcher
+            dueDate = item.dueDate
         }
-        
+        updateDueDateLabel()
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,12 +93,39 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        if section == 1 && datePickerVisible {
+            return 3
+        } else {
+            return super.tableView(tableView, numberOfRowsInSection: section)
+        }
+    }
+ 
+// data picker method
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1 && indexPath.row == 2 {
+            return 217
+        } else {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
+    }
+// data picker method
+    // This calls showDatePicker() when the index-path indicates that the Due Date row was tapped. It also hides the on-screen keyboard if that was visible
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        textField.resignFirstResponder()
+        
+        if indexPath.section == 1 && indexPath.row == 1 {
+            if !datePickerVisible {
+                showDatePicker()
+            } else {
+                hideDatePicker() //hide the date picker when the user taps inside the text field
+            }
+        }
     }
     
     
@@ -101,11 +149,22 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         
         if let item = itemToEdit {
             item.text = textField.text!
+            
+// put the value of the switch control and the dueDate instance variable back into the ChecklistItem object when the user presses the Done button
+            item.shouldRemind = shouldRemindSwitch.isOn // add this
+            item.dueDate = dueDate
+            
+            item.scheduleNotification()
             delegate?.addItemViewController(self, didFinishEditing: item)
         } else {
             let item = ChecklistItem()
             item.text = textField.text!
             item.checked = false
+            
+            item.shouldRemind = shouldRemindSwitch.isOn // add this
+            item.dueDate = dueDate
+            
+            item.scheduleNotification()
             delegate?.addItemViewController(self, didFinishAdding: item)
         }
         
@@ -113,21 +172,90 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
-        return nil
+        if indexPath.section == 1 && indexPath.row == 1 {
+            return indexPath
+        } else {
+            return nil
+        }
+    }
+    
+    // convert the Date value to text
+    func updateDueDateLabel() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        dueDateLabel.text = formatter.string(from: dueDate)
+    }
+    
+// This sets the new instance variable to true, and tells the table view to insert a new row below the Due Date cell. This new row will contain the UIDatePicker
+    func showDatePicker() {
+        datePickerVisible = true
+        
+        let indexPathDateRow = IndexPath(row: 1, section: 1)
+        let indexPathDatePicker = IndexPath(row: 2, section: 1)
+        if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
+        }
+        tableView.beginUpdates()
+        tableView.insertRows(at: [indexPathDatePicker], with: .fade)
+        tableView.reloadRows(at: [indexPathDateRow], with: .none)
+        tableView.endUpdates()
+        
+        datePicker.setDate(dueDate, animated: false)
+    }
+    
+    func hideDatePicker() {
+        if datePickerVisible {
+            datePickerVisible = false
+            let indexPathDateRow = IndexPath(row: 1, section: 1)
+            let indexPathDatePicker = IndexPath(row: 2, section: 1)
+            if let cell = tableView.cellForRow(at: indexPathDateRow) {
+                cell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
+            }
+            tableView.beginUpdates()
+            tableView.reloadRows(at: [indexPathDateRow], with: .none)
+            tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
+            tableView.endUpdates()
+        }
     }
     
     
-    
-
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+        if indexPath.section == 1 && indexPath.row == 2 {
+            return datePickerCell
+        } else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
     }
-    */
+    
+    
+    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        var newIndexPath = indexPath
+        if indexPath.section == 1 && indexPath.row == 2 {
+            newIndexPath = IndexPath(row: 0, section: indexPath.section)
+        }
+        return super.tableView(tableView,
+                               indentationLevelForRowAt: newIndexPath)
+    }
+    
+    
+// It updates the dueDate instance variable with the new date and then updates the text on the Due Date label
+    @IBAction func dateChanged(_ datePicker: UIDatePicker) {
+        dueDate = datePicker.date
+        updateDueDateLabel()
+    }
+    
+    
+// When the switch is toggled to ON, this prompts the user for permission to send local notifications. Once the user has given permission, the app won’t put up a prompt again
+    @IBAction func shouldRemindToggled(_ switchControl: UISwitch) {
+        textField.resignFirstResponder()
+        if switchControl.isOn {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert, .sound]) {
+                granted, error in /* do nothing */
+            }
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
